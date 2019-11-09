@@ -6,9 +6,10 @@ public class Move : MonoBehaviour
 {
     public float m_speed = 0.25f;
     public bool m_moving = true;
-    public Sprite m_carSpriteYAxis;
-    public Sprite m_carSpriteXAxis;
-    public bool m_onXAxis = true;
+    public Direction m_currentDirection = Direction.Right;
+
+    public enum Direction { Left, Up, Right, Down };
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,20 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        switch(m_currentDirection)
+        {
+            case Direction.Right:
+                break;
+
+            case Direction.Left:
+                break;
+
+            case Direction.Up:
+
+
+            case Direction.Down:
+                break; ;
+        }
         if (m_moving)
             transform.position = new Vector3(transform.position.x + m_speed, transform.position.y);
     }
@@ -29,6 +43,10 @@ public class Move : MonoBehaviour
         if(collider.tag == "DestructionBarrier")
         {
             Destroy(this.gameObject, 0.3f);
+        }
+        if(collider.tag == "TurnRight")
+        {
+             = false;
         }
     }
 }
