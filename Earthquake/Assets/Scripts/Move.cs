@@ -51,11 +51,53 @@ public class Move : MonoBehaviour
         }
         if(collider.tag == "TurnRight")
         {
-           if(m_currentDirection  == Direction.Right)
+            switch (m_currentDirection)
             {
+                case Direction.Right:
+                    this.transform.Rotate(Vector3.forward, -90);
+                    m_currentDirection = Direction.Down;
+                    break;
 
-                this.transform.Rotate(Vector3.forward, -90);
-                m_currentDirection = Direction.Down;
+                case Direction.Left:
+                    this.transform.Rotate(Vector3.forward, -90);
+                    m_currentDirection = Direction.Up;
+                    break;
+
+                case Direction.Up:
+                    this.transform.Rotate(Vector3.forward, -90);
+                    m_currentDirection = Direction.Right;
+                    break;
+
+                case Direction.Down:
+                    this.transform.Rotate(Vector3.forward, -90);
+                    m_currentDirection = Direction.Left;
+                    break; ;
+            }
+        }
+
+        if (collider.tag == "TurnLeft")
+        {
+            switch (m_currentDirection)
+            {
+                case Direction.Right:
+                    this.transform.Rotate(Vector3.forward, 90);
+                    m_currentDirection = Direction.Up;
+                    break;
+
+                case Direction.Left:
+                    this.transform.Rotate(Vector3.forward, 90);
+                    m_currentDirection = Direction.Down;
+                    break;
+
+                case Direction.Up:
+                    this.transform.Rotate(Vector3.forward, 90);
+                    m_currentDirection = Direction.Left;
+                    break;
+
+                case Direction.Down:
+                    this.transform.Rotate(Vector3.forward, 90);
+                    m_currentDirection = Direction.Right;
+                    break; ;
             }
         }
     }
