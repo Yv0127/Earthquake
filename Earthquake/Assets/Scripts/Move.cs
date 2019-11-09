@@ -44,9 +44,9 @@ public class Move : MonoBehaviour
         {
             Destroy(this.gameObject, 0.3f);
         }
-        if(collider.tag == "TurnRight")
-        {
-             = false;
-        }
+        //if(collider.tag == "TurnRight")
+       // {
+       //      = false;
+        //}
     }
 }
