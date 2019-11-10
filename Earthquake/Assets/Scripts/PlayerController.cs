@@ -7,30 +7,37 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     // TODO (Leandro):
-        // Find way to map normal tiles to destroyed tiles
         // Do cues for sound and effects
         // Count points
         // Leave gaps for the powerups
 
     // Configuration Parameters
-    [SerializeField]
-    private float _crackDistance = 10.0f; // Total distance covered by the crack
+    //[SerializeField]
+    //private float _crackDistance = 10.0f; // Total distance covered by the crack
 
     // Reference Variables
     [SerializeField]
-    private Tilemap[] _tilemaps;
+    private Tilemap[] _tilemaps = null;
     [SerializeField]
-    private Tile[] _notDestroyed;
+    private Tile[] _notDestroyed = null;
     [SerializeField]
-    private Tile[] _destroyedTiles;
-
+    private Tile[] _destroyedTiles = null;
     private LineRenderer _line; // Stores reference to line renderer component
  
     // Local Variables
+    private enum TileLayers
+    {
+        Ground = 0,
+        Street = 1,
+        Building = 2
+    }
     private bool _didFirstClick = false; // To have control if the first click was done
     private bool _didSecondClick = false; // To have control if the second click was done
     private Vector3 _firstClickPosition = Vector3.zero; // The world position where the first click was done
     private Vector3 _secondClickPosition = Vector3.zero; // The world position of the second click
+
+    // Hashset vector used for the tile fetching on the second mouse click (see CheckForClick method)
+    private HashSet<Vector3Int>[] _hitTiles = new HashSet<Vector3Int>[3];
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +45,11 @@ public class PlayerController : MonoBehaviour
         // Gets reference to Line Renderer component and hiddes it from the screen for good measure
         _line = GetComponent<LineRenderer>();
         _line.enabled = false;
+
+        // Initialization of hashes for the tile fetching on second mouse click
+        _hitTiles[(int)TileLayers.Ground] = new HashSet<Vector3Int>();
+        _hitTiles[(int)TileLayers.Street] = new HashSet<Vector3Int>();
+        _hitTiles[(int)TileLayers.Building] = new HashSet<Vector3Int>();
     }
 
     // Update is called once per frame
@@ -83,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 _line.SetPosition(0, _firstClickPosition);
                 _didFirstClick = true;
             }
-            else
+            else if(!_didSecondClick)
             {
                 // Stores the second clicks's position
                 _secondClickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -93,44 +105,78 @@ public class PlayerController : MonoBehaviour
                 // TODO(Leandro): Do crack and stuff
 
                 /* This section is the manual collision with the tiles */
-
-                /*
-                    First its declared a HashSet so its guaranteed that there won't have repeated tile entries
-                    Then it gets the line that is drawn and gets its magnitude and direction
-                */
-                HashSet<Vector3Int> tiles = new HashSet<Vector3Int>();
+                // First we get the line that was formed with the mouse clicks, its magnitude and its direction
                 Vector3 direction = (_secondClickPosition - _firstClickPosition);
                 float magnitude = direction.magnitude;
                 direction.Normalize();
                 
                 
-                // After that it loops through the line from .25 units and populates the HashSet with the tiles
+                // After that it loops through the line from .25 units and populates the HashSets with the tiles
                 for(float dist = 0; dist < magnitude; dist += .25f)
                 {
-                    Vector3Int res = _tilemaps[0].WorldToCell(_firstClickPosition + direction * dist);
-                    tiles.Add(res);
+                    CheckTileAndAdd(_tilemaps[(int)TileLayers.Ground].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Ground);
+                    CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Street);
+                    CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Street);
                 }
                 // Ending the loop, we do one last check with the last position to get a possible last tile
-                Vector3Int finaltile = _tilemaps[0].WorldToCell(_secondClickPosition);
-                tiles.Add(finaltile);
+                CheckTileAndAdd(_tilemaps[(int)TileLayers.Ground].WorldToCell(_secondClickPosition), (int)TileLayers.Ground);
+                CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_secondClickPosition), (int)TileLayers.Street);
+                CheckTileAndAdd(_tilemaps[(int)TileLayers.Building].WorldToCell(_secondClickPosition), (int)TileLayers.Building);
 
-                //Debug.Log(tiles.Count);
+                Debug.Log("Ground: " + _hitTiles[(int)TileLayers.Ground].Count + "/ Street: " + _hitTiles[(int)TileLayers.Street].Count
+                     + "/ Building: " + _hitTiles[(int)TileLayers.Building].Count);
 
-
-                // Then there is a loop through the hash, the tiles in it are swithed to their destroyed version
-                foreach(Vector3Int tileCoord in tiles)
+                // Then there are loops through the hashsets, the tiles in it are swithed to their destroyed version
+                if(_hitTiles[(int)TileLayers.Ground].Count > 0)
                 {
-                    // Find tile in the array
-                    //Debug.Log("Hitting tile " + _tilemap.GetTile(tileCoord).name);
-                    Tile tile = _tilemaps[0].GetTile(tileCoord) as Tile;
-                    int index = Array.IndexOf(_notDestroyed, tile);
-                    Tile destroyedTile = _destroyedTiles[index];
-                    
-                    // Change to destroyed tile
-                    _tilemaps[0].SetTile(tileCoord, destroyedTile);
-                    // Count points ?
+                    foreach(Vector3Int tileCoord in _hitTiles[(int)TileLayers.Ground])
+                    {
+                        SwitchToDestroyed(tileCoord, (int)TileLayers.Ground);
+                    }
+                }
+
+                if(_hitTiles[(int)TileLayers.Street].Count > 0)
+                {
+                    foreach(Vector3Int tileCoord in _hitTiles[(int)TileLayers.Street])
+                    {
+                        SwitchToDestroyed(tileCoord, (int)TileLayers.Street);
+                    }
+                }
+
+                if(_hitTiles[(int)TileLayers.Building].Count > 0)
+                {
+                    foreach(Vector3Int tileCoord in _hitTiles[(int)TileLayers.Building])
+                    {
+                        SwitchToDestroyed(tileCoord, (int)TileLayers.Building);
+                    }
                 }
             }
         }
+    }
+
+    private void CheckTileAndAdd(Vector3Int result, int tileLayer)
+    {
+        if(_tilemaps[tileLayer].GetTile(result))
+        {
+            //Debug.Log("Tile exists in " + index);
+            _hitTiles[tileLayer].Add(result);
+        }
+    }
+
+    private void SwitchToDestroyed(Vector3Int tileCoordinate, int tileLayer)
+    {
+        // Find tile in the array
+        //Debug.Log("Hitting tile " + _tilemap.GetTile(tileCoord).name);
+        Tile tile = _tilemaps[tileLayer].GetTile(tileCoordinate) as Tile;
+        int arrayIndex = Array.IndexOf(_notDestroyed, tile);
+        Tile destroyedTile = null;
+        if(arrayIndex < _destroyedTiles.Length)
+            destroyedTile = _destroyedTiles[arrayIndex];
+        else
+            Debug.Log("ERROR: NO DESTROYED TILE!");
+                        
+        // Change to destroyed tile
+        _tilemaps[tileLayer].SetTile(tileCoordinate, destroyedTile);
+        // Count points ?
     }
 }
