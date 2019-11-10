@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        m_carList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -113,7 +113,7 @@ public class Spawner : MonoBehaviour
     {
         foreach (GameObject car in m_carList)
         {
-            
+            car.GetComponent<Move>().Stop();
         }
     }
 }

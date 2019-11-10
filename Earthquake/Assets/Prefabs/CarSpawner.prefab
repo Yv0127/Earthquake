@@ -97,6 +97,6 @@ MonoBehaviour:
   m_maxCars: 5
   m_curCars: 0
   m_car: {fileID: 8827279557242895274, guid: d13a1dbb36d87c34ab5dabb52cac057a, type: 3}
-  m_carDirection: 0
+  m_carDirection: 2
   m_carArray: []
   m_spawnRate: 30

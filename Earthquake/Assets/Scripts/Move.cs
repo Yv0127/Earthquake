@@ -43,6 +43,11 @@ public class Move : MonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        this.m_moving = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.tag == "DestructionBarrier")
