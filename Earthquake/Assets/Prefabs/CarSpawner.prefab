@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7720891985647124826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.93, y: -0.05, z: -0.6229289}
+  m_LocalPosition: {x: -14.93, y: 0.02, z: -0.6229289}
   m_LocalScale: {x: 4.051, y: 4.051, z: 4.051}
   m_Children: []
   m_Father: {fileID: 0}
@@ -93,7 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7bb05578c5aae49b1caa994fe071d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_spawnerName: 
   m_maxCars: 5
   m_curCars: 0
   m_car: {fileID: 8827279557242895274, guid: d13a1dbb36d87c34ab5dabb52cac057a, type: 3}
+  m_carDirection: 0
+  m_carArray: []
   m_spawnRate: 30
