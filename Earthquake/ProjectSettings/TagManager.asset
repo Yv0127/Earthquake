@@ -50,11 +50,14 @@ TagManager:
   - name: Street
     uniqueID: 716963059
     locked: 0
-  - name: Buildings
-    uniqueID: 1153636283
-    locked: 0
   - name: Cars
     uniqueID: 400732269
+    locked: 0
+  - name: Lower structures
+    uniqueID: 4186075233
+    locked: 0
+  - name: Buildings
+    uniqueID: 1153636283
     locked: 0
   - name: Crack
     uniqueID: 2508165423
