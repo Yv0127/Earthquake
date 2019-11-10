@@ -20,12 +20,31 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(m_levelNumber + 1);
-        LevelCounter.m_levelCounter++;
+        if(LevelCounter.m_isInScoreScreen)
+        {
+            SceneManager.LoadScene(m_levelNumber + 1);
+            LevelCounter.m_levelCounter++;
+            LevelCounter.m_isInScoreScreen = false;
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+            LevelCounter.m_isInScoreScreen = true;
+        }
     }
     public void LoadScene(int pLevel)
     {
+
+        if (pLevel != 1)
+            LevelCounter.m_isInScoreScreen = false;
         SceneManager.LoadScene(pLevel);
         LevelCounter.m_levelCounter = pLevel;
+    }
+
+    public void StartGame()
+    {
+        LevelCounter.m_isInScoreScreen = false;
+        LevelCounter.m_levelCounter = 1;
+        LoadNextScene();
     }
 }

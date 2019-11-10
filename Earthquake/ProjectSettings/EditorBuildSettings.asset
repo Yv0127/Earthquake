@@ -12,9 +12,36 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: a48d0bbc228fab942809056b18c27cd7
   - enabled: 1
+    path: Assets/Scenes/NextLevel Screen.unity
+    guid: e0d87900701d2ce44b3400ca63bbe9cb
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: e5375fb5ff4384f82add87c8378aa4a5
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: cb9535cae1be24619a2fffe466634545
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 6ecd98784c1c8439fb5f84bb66bf5742
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 8884ec6bfcb7e4b0792662daa92baa07
+  - enabled: 1
+    path: Assets/Scenes/Level5.unity
+    guid: 9dcadba272592443591816a642263387
+  - enabled: 1
+    path: Assets/Scenes/Level6.unity
+    guid: e70c57dac73584e08b95942aca43f2dc
+  - enabled: 1
+    path: Assets/Scenes/Level7.unity
+    guid: 605a762ecf884476c876b547abee3722
+  - enabled: 1
+    path: Assets/Scenes/Level8.unity
+    guid: 528690041ed8147009fb225811b38075
+  - enabled: 1
+    path: Assets/Scenes/Level9.unity
+    guid: 26245dc83363a4b2cb9fb182d4a6a677
+  - enabled: 1
+    path: Assets/Scenes/Level10.unity
+    guid: 9e5cb70417383401d855744b0231dc22
   m_configObjects: {}

@@ -22,7 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Tile[] _destroyedTiles = null;
     private LineRenderer _line; // Stores reference to line renderer component
- 
+
+    public GameObject m_levelManager;
+
+    public int m_counter = 0;
+    public bool m_finished = false;
+
     // Local Variables
     private enum TileLayers
     {
@@ -71,6 +76,15 @@ public class PlayerController : MonoBehaviour
 
         // Check for left click
         CheckForClick();
+
+        if(m_finished)
+        {
+            m_counter++;
+            if(m_counter >= 100)
+            {
+                m_levelManager.GetComponent<LevelManager>().LoadNextScene();
+            }
+        }
 
     }
 
@@ -155,13 +169,22 @@ public class PlayerController : MonoBehaviour
                 _line.enabled = false;
 
                 // Play crack sound
+                m_finished = true;
 
                 // Stop all cars
-                StopCars.Instance.Stop();
-                
-                // Change scene after 5 seconds or so
+                if (StopCars.Instance != null)
+                    StopCars.Instance.Stop();
+               
+
             }
         }
+    }
+
+    IEnumerator Wait()
+    {
+        //print(Time.time);
+        yield return new WaitForSeconds(5);
+        //print(Time.time);
     }
 
     private void CheckTileAndAdd(Vector3Int result, int tileLayer)

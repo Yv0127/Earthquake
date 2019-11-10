@@ -5,4 +5,5 @@ using UnityEngine;
 public static class LevelCounter
 {
     public static int m_levelCounter = 0;
+    public static bool m_isInScoreScreen = true;
 }
