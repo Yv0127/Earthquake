@@ -7,9 +7,8 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     // TODO (Leandro):
-        // Do cues for sound and effects
-        // Count points
-        // Leave gaps for the powerups
+        // Implement score count
+        // Implement maximum crack range
 
     // Configuration Parameters
     //[SerializeField]
@@ -61,6 +60,7 @@ public class PlayerController : MonoBehaviour
             // Set end point of line to mouse position while second click isn't done
             Vector3 currentMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             currentMouse.z = 0;
+            
             //Debug.Log("Drawing line to mouse position..." + _firstClickPosition + " / " + currentMouse);
             _line.SetPosition(1, currentMouse);
             
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
                 {
                     CheckTileAndAdd(_tilemaps[(int)TileLayers.Ground].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Ground);
                     CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Street);
-                    CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Street);
+                    CheckTileAndAdd(_tilemaps[(int)TileLayers.Building].WorldToCell(_firstClickPosition + direction * dist), (int)TileLayers.Building);
                 }
                 // Ending the loop, we do one last check with the last position to get a possible last tile
                 CheckTileAndAdd(_tilemaps[(int)TileLayers.Ground].WorldToCell(_secondClickPosition), (int)TileLayers.Ground);
