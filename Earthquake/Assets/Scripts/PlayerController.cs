@@ -150,6 +150,16 @@ public class PlayerController : MonoBehaviour
                         SwitchToDestroyed(tileCoord, (int)TileLayers.Building);
                     }
                 }
+
+                // Disable line
+                _line.enabled = false;
+
+                // Play crack sound
+
+                // Stop all cars
+                StopCars.Instance.Stop();
+                
+                // Change scene after 5 seconds or so
             }
         }
     }

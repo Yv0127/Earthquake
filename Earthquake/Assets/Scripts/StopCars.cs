@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class StopCars : MonoBehaviour
 {
+    static private StopCars InstanceRef;
+
+    static public StopCars Instance
+    {
+        get
+        {
+            if(InstanceRef == null)
+            {
+                InstanceRef = FindObjectOfType<StopCars>();
+            }
+            return InstanceRef;
+        }
+    }
+
     public GameObject[] m_carSpawners;
 
     // Start is called before the first frame update

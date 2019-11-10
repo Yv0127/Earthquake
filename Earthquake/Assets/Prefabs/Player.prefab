@@ -110,6 +110,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13c78220c9aae44f38e4c5f0632df54c, type: 2}
   - {fileID: 11400000, guid: 697c42130bb9d41f4a89cf0324a3765c, type: 2}
   - {fileID: 11400000, guid: 8a34a3aa738194cc59682419cd421ab8, type: 2}
+  - {fileID: 11400000, guid: 7389d1bb71af940da8ad20a640a9c1f5, type: 2}
+  - {fileID: 11400000, guid: 6b97c099bfa5e48f8a45b8cda4048d57, type: 2}
   _destroyedTiles:
   - {fileID: 11400000, guid: 250c72cb0051041caafdc5623dbabde8, type: 2}
   - {fileID: 11400000, guid: 649316ad50b404e82a9f709c71ff804d, type: 2}
@@ -172,6 +174,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d7151186875644c498467d536b447a3, type: 2}
   - {fileID: 11400000, guid: ca18fd8408a6642b797df857513441f9, type: 2}
   - {fileID: 11400000, guid: f82e55ab974c3466b95c7cdc148ae0a7, type: 2}
+  - {fileID: 11400000, guid: 3d7151186875644c498467d536b447a3, type: 2}
+  - {fileID: 11400000, guid: f86fe513f3c514792bceb613731b7982, type: 2}
 --- !u!120 &7203048056642054131
 LineRenderer:
   m_ObjectHideFlags: 0
