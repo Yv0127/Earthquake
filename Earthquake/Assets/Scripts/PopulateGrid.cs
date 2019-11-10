@@ -35,7 +35,7 @@ public class PopulateGrid : MonoBehaviour
 
                     string[] decoded = line.Split('|');
                     string name = decoded[0];
-                    uint score = uint.Parse(decoded[1]);
+                    int score = int.Parse(decoded[1]);
                     PlayerScore pscore = new PlayerScore();
                     pscore.Name = name;
                     pscore.Score = score;

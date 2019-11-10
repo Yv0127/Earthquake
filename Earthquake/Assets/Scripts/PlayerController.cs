@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
             m_counter++;
             if(m_counter >= 100)
             {
+                LevelCounter.m_score += Scorescript.Instance.GetScore();
                 m_levelManager.GetComponent<LevelManager>().LoadNextScene();
             }
         }

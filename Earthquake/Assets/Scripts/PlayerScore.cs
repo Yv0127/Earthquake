@@ -5,5 +5,5 @@ using UnityEngine;
 public class PlayerScore
 {
     public string Name { get; set; }
-    public uint Score { get; set; }
+    public int Score { get; set; }
 }

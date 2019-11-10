@@ -29,9 +29,9 @@ public class ScoreSave : MonoBehaviour
             System.IO.Directory.CreateDirectory(fi.DirectoryName);
         }
 
-        using (StreamWriter writer = new StreamWriter(path) )
+        using (StreamWriter writer = new StreamWriter(path, true) )
         {
-            writer.WriteLine("JAJAJA|500");
+            writer.WriteLine("Player|" + LevelCounter.m_score.ToString());
         }
     }
 }
