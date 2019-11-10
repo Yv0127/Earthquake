@@ -5,7 +5,6 @@ using UnityEngine;
 public class StopCars : MonoBehaviour
 {
     public GameObject[] m_carSpawners;
-    int i = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -16,11 +15,6 @@ public class StopCars : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        i++;
-        if(i >= 60)
-        {
-            Stop();
-        }
     }
 
     public void Stop()
