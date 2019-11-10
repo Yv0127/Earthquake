@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // TODO (Leandro):
+        // Find way to map normal tiles to destroyed tiles
+        // Do cues for sound and effects
+        // Count points
+        // Leave gaps for the powerups
+
     // Configuration Parameters
     [SerializeField]
     private float _crackDistance = 10.0f; // Total distance covered by the crack
@@ -68,8 +74,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // After second click, leave the line there for now
-                // Handle second click
+                // TODO (Leandro):
+                    // After second click, leave the line there for now
+                    // Handle second click
+                    // Stop line and leave it there
+                    // Raycast for layers and see what is returned
             }
         }
     }
