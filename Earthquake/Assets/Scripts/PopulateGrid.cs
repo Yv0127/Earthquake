@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ public class PopulateGrid : MonoBehaviour
 
         if (File.Exists(path))
         {
+            List<PlayerScore> scoreList = new List<PlayerScore>();
             using (StreamReader r = new StreamReader(path))
             {
                 while (!r.EndOfStream)
@@ -32,17 +34,51 @@ public class PopulateGrid : MonoBehaviour
                     string line = r.ReadLine();
 
                     string[] decoded = line.Split('|');
+                    string name = decoded[0];
+                    uint score = uint.Parse(decoded[1]);
+                    PlayerScore pscore = new PlayerScore();
+                    pscore.Name = name;
+                    pscore.Score = score;
 
-                    GameObject newObj; // Create GameObject instance
-
-                    // Create new instances of our prefab until we've created as many as we specified
-                    newObj = (GameObject)Instantiate(m_txtPlayerAndScorePrefab, transform);
-
-                    newObj.transform.SetParent(this.transform, false);
-
-                    newObj.GetComponent<Text>().text = string.Format("{0}{2}{2}{2}{1}", decoded[0], decoded[1], "\t");
+                    scoreList.Add(pscore);
                 };
             };
+
+
+            scoreList.Sort(new PlayerScoreComparer());
+
+            int count = 0;
+
+            foreach (PlayerScore playerScore in scoreList)
+            {
+                GameObject newObj; // Create GameObject instance
+
+                // Create new instances of our prefab until we've created as many as we specified
+                newObj = (GameObject)Instantiate(m_txtPlayerAndScorePrefab, transform);
+
+                newObj.transform.SetParent(this.transform, false);
+
+                float yPos = count * newObj.GetComponent<RectTransform>().sizeDelta.y;
+
+                newObj.transform.localPosition = new Vector3(newObj.transform.localPosition.x, yPos, 0);
+
+                newObj.GetComponent<TextMeshProUGUI>().text = playerScore.Name;
+                newObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerScore.Score.ToString();
+
+                count++;
+            }
+
+            float size = 0f;
+
+            foreach (Transform transform in this.transform)
+            {
+                size += transform.GetComponent<RectTransform>().sizeDelta.y;
+            }
+
+            Debug.Log(size);
+
+            this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().sizeDelta.x, size);
+
         }
 
     }

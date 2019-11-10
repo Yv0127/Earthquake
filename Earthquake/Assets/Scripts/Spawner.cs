@@ -19,6 +19,9 @@ public class Spawner : MonoBehaviour
     // will be spawned.
     public GameObject[] m_carArray;
 
+    // The list of Car Gameobjects that are active.
+    private List<GameObject> m_carList;
+
     // How fast the cars are spawned. This is measured in frames.
     [SerializeField]
     private int m_spawnRate = 5;
@@ -85,6 +88,9 @@ public class Spawner : MonoBehaviour
                 newCar.GetComponent<SpawnerReference>().m_spawnerName = this.m_spawnerName;
                 newCar.GetComponent<SpawnerReference>().CarDestroyed += this.OnCarDestroyed;
 
+                // Adding the car to the list of active cars.
+                m_carList.Add(newCar);
+
                 // Let the iteration keep going.
                 m_spawnTick = 0;
                 m_curCars++;
@@ -101,5 +107,13 @@ public class Spawner : MonoBehaviour
         // When one of our spawner's cars is destroyed, we keep track of how many cars are left on
         // the scene that comes from our spawner.
         this.m_curCars--;
+    }
+
+    public void Stop()
+    {
+        foreach (GameObject car in m_carList)
+        {
+            
+        }
     }
 }
