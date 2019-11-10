@@ -39,4 +39,9 @@ public class Scorescript : MonoBehaviour
     {
         scorevalue += scoreToAdd;
     }
+
+    public int GetScore()
+    {
+        return scorevalue;
+    }
 }
