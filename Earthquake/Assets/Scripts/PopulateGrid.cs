@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -39,7 +40,7 @@ public class PopulateGrid : MonoBehaviour
 
                     newObj.transform.SetParent(this.transform, false);
 
-                    newObj.GetComponent<Text>().text = string.Format("{0} {1}", decoded[0], decoded[1]);
+                    newObj.GetComponent<Text>().text = string.Format("{0}{2}{2}{2}{1}", decoded[0], decoded[1], "\t");
                 };
             };
         }
