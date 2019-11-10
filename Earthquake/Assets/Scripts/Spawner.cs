@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public string m_spawnerName;
     public int m_maxCars = 5;
     public int m_curCars = 0;
     public GameObject m_car;
@@ -55,12 +57,21 @@ public class Spawner : MonoBehaviour
                         break;
                 }
 
+                newCar.GetComponent<SpawnerReference>().m_spawnerName = this.m_spawnerName;
+                newCar.GetComponent<SpawnerReference>().CarDestroyed += this.OnCarDestroyed;
+
                 m_spawnTick = 0;
+                m_curCars++;
             }
         }
         else
         {
 
         }
+    }
+
+    private void OnCarDestroyed(object sender, EventArgs e)
+    {
+        this.m_curCars--;
     }
 }

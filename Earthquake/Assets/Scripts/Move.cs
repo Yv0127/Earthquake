@@ -46,7 +46,7 @@ public class Move : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.tag == "DestructionBarrier")
-        {
+        {            
             Destroy(this.gameObject, 0.3f);
         }
         if(collider.tag == "TurnRight")

@@ -189,6 +189,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d370e6ec75242845ac153432345fd26, type: 3}
+--- !u!1 &306396886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8827279557242895274, guid: d13a1dbb36d87c34ab5dabb52cac057a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8827279557481760124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &306396887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306396886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4114c1604a2ee264a9510e58f130f506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spawnerName: 
 --- !u!1001 &734625380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -841,6 +860,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_carDirection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720891985647124829, guid: c53a0ca3da22d70499c667f081ee5b71,
+        type: 3}
+      propertyPath: m_maxCars
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c53a0ca3da22d70499c667f081ee5b71, type: 3}
