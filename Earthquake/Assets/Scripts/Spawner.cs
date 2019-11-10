@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     public int m_curCars = 0;
     public GameObject m_car;
     public Move.Direction m_carDirection;
+    public GameObject[] m_carArray;
 
     [SerializeField]
     private int m_spawnRate = 5;
@@ -31,10 +32,24 @@ public class Spawner : MonoBehaviour
             // Check if we already have the maximum amount of cars in the game
             if(m_curCars < m_maxCars)
             {
-                // Spawn a car
-                m_car.GetComponent<Move>().m_currentDirection = m_carDirection;
-                GameObject newCar = Instantiate(m_car);
                 
+                GameObject newCar;
+
+                if(m_carArray != null && m_carArray.Length > 0)
+                {
+                    // We have an array of cars, so we spawn one of these at random.
+                    System.Random r = new System.Random();
+
+                    int randomIndex = r.Next(0, m_carArray.Length);
+
+                    m_car = m_carArray[randomIndex];
+                }
+
+                // Spawn a car
+
+                m_car.GetComponent<Move>().m_currentDirection = m_carDirection;
+                newCar = Instantiate(m_car);
+
 
                 var position = this.transform.position;
                 newCar.transform.position = new Vector3(position.x, position.y);
