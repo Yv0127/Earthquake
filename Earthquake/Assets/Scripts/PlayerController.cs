@@ -177,6 +177,19 @@ public class PlayerController : MonoBehaviour
                         
         // Change to destroyed tile
         _tilemaps[tileLayer].SetTile(tileCoordinate, destroyedTile);
-        // Count points ?
+        
+        // Count points
+        switch(tileLayer)
+        {
+            case 0:
+                Scorescript.Instance.AddScore(2000);
+                break;
+            case 1:
+                Scorescript.Instance.AddScore(10000);
+                break;
+            case 2:
+                Scorescript.Instance.AddScore(5000000);
+                break;
+        }
     }
 }
