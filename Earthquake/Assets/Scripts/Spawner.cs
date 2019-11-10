@@ -27,10 +27,13 @@ public class Spawner : MonoBehaviour
     private int m_spawnRate = 5;
     private int m_spawnTick = 0;
 
+    private bool m_spawning;
+
     // Start is called before the first frame update
     void Start()
     {
         m_carList = new List<GameObject>();
+        m_spawning = true;
     }
 
     // Update is called once per frame
@@ -39,7 +42,7 @@ public class Spawner : MonoBehaviour
         m_spawnTick++;
 
         // Spawn a car only at a certain interval of time This time is in frames.
-        if(m_spawnTick >= m_spawnRate)
+        if(m_spawnTick >= m_spawnRate && m_spawning)
         {
             // Check if we already have the maximum amount of cars in the game
             if(m_curCars < m_maxCars)
@@ -111,6 +114,7 @@ public class Spawner : MonoBehaviour
 
     public void Stop()
     {
+        m_spawning = false;
         foreach (GameObject car in m_carList)
         {
             car.GetComponent<Move>().Stop();
