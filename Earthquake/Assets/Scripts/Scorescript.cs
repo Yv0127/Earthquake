@@ -31,7 +31,7 @@ public class Scorescript : MonoBehaviour
     void Update()
     {
      
-        score.text = "score " + scorevalue;
+        score.text = scorevalue.ToString();
         
     }
 
