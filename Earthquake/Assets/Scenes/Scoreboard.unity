@@ -452,7 +452,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 296, y: -209}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 400, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &106906981
 MonoBehaviour:
@@ -1583,7 +1583,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -284, y: -209}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 1000, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1468441217
 MonoBehaviour:
@@ -1687,7 +1687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b934e406562e1e47bff83a3ba322a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scoreFilePath: /Scores/score.txt
 --- !u!1 &1474043747
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_txtPlayerAndScorePrefab: {fileID: 642245135215665966, guid: 63a1fc9f71605564396147ab628d41e4,
     type: 3}
-  m_scoreFilePath: /Scores/scores.txt
 --- !u!114 &2095168015
 MonoBehaviour:
   m_ObjectHideFlags: 0
