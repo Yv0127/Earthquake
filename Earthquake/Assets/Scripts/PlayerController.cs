@@ -7,13 +7,14 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     // TODO (Leandro):
-        // Implement score count
-        // Implement maximum crack range
+        // Implement maximum crack distance
 
+
+#region Variables & Properties
     // Configuration Parameters
     //[SerializeField]
     //private float _crackDistance = 10.0f; // Total distance covered by the crack
-
+    
     // Reference Variables
     [SerializeField]
     private Tilemap[] _tilemaps = null;
@@ -42,7 +43,9 @@ public class PlayerController : MonoBehaviour
 
     // Hashset vector used for the tile fetching on the second mouse click (see CheckForClick method)
     private HashSet<Vector3Int>[] _hitTiles = new HashSet<Vector3Int>[3];
+#endregion
 
+#region Private Methods
     // Start is called before the first frame update
     void Start()
     {
@@ -60,33 +63,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Draw line if there was a first click
-        if(_didFirstClick && !_didSecondClick)
-        {
-            // Set end point of line to mouse position while second click isn't done
-            Vector3 currentMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            currentMouse.z = 0;
-            
-            //Debug.Log("Drawing line to mouse position..." + _firstClickPosition + " / " + currentMouse);
-            _line.SetPosition(1, currentMouse);
-            
-            // Enables line renderer
-            if(!_line.enabled)
-                _line.enabled = true;
-        }
+        DrawPreviewLine();
 
+        // Check for cancel input
+        CheckForCancel();
+        
         // Check for left click
         CheckForClick();
 
-        if(m_finished)
-        {
-            m_counter++;
-            if(m_counter >= 100)
-            {
-                LevelCounter.m_score += Scorescript.Instance.GetScore();
-                m_levelManager.GetComponent<LevelManager>().LoadNextScene();
-            }
-        }
-
+        // Advance scene
+        NextScene();
     }
 
     // Method responsible for checking for left mouse button clicks
@@ -138,8 +124,8 @@ public class PlayerController : MonoBehaviour
                 CheckTileAndAdd(_tilemaps[(int)TileLayers.Street].WorldToCell(_secondClickPosition), (int)TileLayers.Street);
                 CheckTileAndAdd(_tilemaps[(int)TileLayers.Building].WorldToCell(_secondClickPosition), (int)TileLayers.Building);
 
-                Debug.Log("Ground: " + _hitTiles[(int)TileLayers.Ground].Count + "/ Street: " + _hitTiles[(int)TileLayers.Street].Count
-                     + "/ Building: " + _hitTiles[(int)TileLayers.Building].Count);
+                //Debug.Log("Ground: " + _hitTiles[(int)TileLayers.Ground].Count + "/ Street: " + _hitTiles[(int)TileLayers.Street].Count
+                //     + "/ Building: " + _hitTiles[(int)TileLayers.Building].Count);
 
                 // Then there are loops through the hashsets, the tiles in it are swithed to their destroyed version
                 if(_hitTiles[(int)TileLayers.Ground].Count > 0)
@@ -170,9 +156,11 @@ public class PlayerController : MonoBehaviour
                 _line.enabled = false;
 
                 // Play crack sound
+
+                // Finished level
                 m_finished = true;
 
-                // Stop all cars
+                // Stop all cars if there are any
                 if (StopCars.Instance != null)
                     StopCars.Instance.Stop();
                
@@ -181,6 +169,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Method that draws the preview line of the crack
+    private void DrawPreviewLine()
+    {
+        if (_didFirstClick && !_didSecondClick)
+        {
+            // Set end point of line to mouse position while second click isn't done
+            Vector3 currentMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            currentMouse.z = 0;
+
+            //Debug.Log("Drawing line to mouse position..." + _firstClickPosition + " / " + currentMouse);
+            _line.SetPosition(1, currentMouse);
+
+            // Enables line renderer
+            if (!_line.enabled)
+                _line.enabled = true;
+        }
+    }
+    
+    // IEnumerator to wait some seconds
     IEnumerator Wait()
     {
         //print(Time.time);
@@ -188,6 +195,7 @@ public class PlayerController : MonoBehaviour
         //print(Time.time);
     }
 
+    // Method that checks if tile exists in a tilemap and adds to the correct HashSet
     private void CheckTileAndAdd(Vector3Int result, int tileLayer)
     {
         if(_tilemaps[tileLayer].GetTile(result))
@@ -197,6 +205,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Method that changes a tile to it's respective destroyed tile
     private void SwitchToDestroyed(Vector3Int tileCoordinate, int tileLayer)
     {
         // Find tile in the array
@@ -226,4 +235,31 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    // Method responsible for checking the cancel input of the crack line
+    private void CheckForCancel()
+    {
+        // Presses ESC to cancel the crack
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            _didFirstClick = false;
+            _firstClickPosition = Vector3.zero;
+            _line.enabled = false;
+        }
+    }
+
+    // Method that loads the correct next scene through the Level Manager
+    private void NextScene()
+    {
+        if (m_finished)
+        {
+            m_counter++;
+            if (m_counter >= 100)
+            {
+                LevelCounter.m_score += Scorescript.Instance.GetScore();
+                m_levelManager.GetComponent<LevelManager>().LoadNextScene();
+            }
+        }
+    }
+#endregion
 }

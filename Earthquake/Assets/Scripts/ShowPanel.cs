@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShowPanel : MonoBehaviour
 {
-    GameObject m_panel;
+    GameObject m_panel = null;
 
     // Start is called before the first frame update
     void Start()
