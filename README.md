@@ -1,4 +1,8 @@
 # Team-Crack
+Game made in the Gamerella Game Jam of 2019 at Concordia University.
+
+You are a god of nature that wants to destroy humans. To do so, you need to create earthquakes that are well timed in order to do a maximum amount of destruction.
+
 Point system
 
 Buildings
